@@ -19,6 +19,10 @@ yarn build
 ```
 yarn lint
 ```
+### analyzer for Project
+```
+yarn analyzer
+```
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
