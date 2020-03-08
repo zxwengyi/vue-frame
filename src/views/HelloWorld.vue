@@ -8,9 +8,9 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapGetters } from 'vuex';
 export default {
-  name: "HelloWorld",
+  name: 'HelloWorld',
   props: {
     msg: String
   },
@@ -20,11 +20,11 @@ export default {
     })
   },
   methods: {
-    ...mapActions("app", {
-      add: "Add"
+    ...mapActions('app', {
+      add: 'Add'
     }),
     addEnd() {
-      this.add({ number:  1});
+      this.add({ number: 1 });
     }
   }
 };

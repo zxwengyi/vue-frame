@@ -1,3 +1,4 @@
+
 import Vue from "vue";
 import Router from "vue-router";
 Vue.use(Router);
@@ -17,8 +18,7 @@ const router = new Router({
     {
       path: "/about",
       name: "about",
-      component: () =>
-        import(/* webpackChunkName: "about" */ "@/views/about.vue"),
+      component: () => import(/* webpackChunkName: "about" */ "@/views/about.vue"),
       meta: {
         auth: true,
         keepAlive: true
@@ -27,8 +27,7 @@ const router = new Router({
     {
       path: "/login",
       name: "login",
-      component: () =>
-        import(/* webpackChunkName: "login" */ "@/views/login.vue"),
+      component: () => import(/* webpackChunkName: "login" */ "@/views/login.vue"),
       meta: {
         auth: false,
         keepAlive: true
@@ -36,23 +35,18 @@ const router = new Router({
     },
     {
       path: "*", // 未匹配到路由时重定向
-      redirect: "/",
-      meta: {
-        // auth: true,
-        // keepAlive: true
-      }
+      redirect: "/"
     }
   ]
 });
 
 // 全局路由钩子函数 对全局有效
 router.beforeEach((to, from, next) => {
-  let auth = to.meta.auth;
-//   let token = store.getters["login/token"];
+  let auth = to.meta.auth; // 是否需要授权
+  //   let token = store.getters["login/token"];
   console.log('进入路由拦截了');
   if (auth) {
     // 需要登录
-    next();
     // if (token) {
     //   next();
     // } else {

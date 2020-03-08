@@ -5,7 +5,13 @@
     <svg-icon icon-name="message" />
     <p>{{ number }}</p>
     <div @click="addEnd">add</div>
-    <button @click="toPath">to abaout</button>
+    <button @click="toPath('about')">to abaout</button>
+    <button @click="toPath('login')">to login</button>
+    <van-button type="default">默认按钮</van-button>
+    <van-button type="primary">主要按钮</van-button>
+    <van-button type="info">信息按钮</van-button>
+    <van-button type="warning">警告按钮</van-button>
+    <van-button type="danger">危险按钮</van-button>
   </div>
 </template>
 <script>
@@ -29,8 +35,8 @@ export default {
     addEnd() {
       this.add({ number: 1 });
     },
-    toPath(){
-        this.$router.push({name: "about"})
+    toPath(path) {
+      this.$router.push({ name: path });
     }
   }
 };
@@ -38,8 +44,8 @@ export default {
 <style scoped lang="scss">
 $maimClore: rgb(49, 148, 110);
 .svg-icon.set {
-  width: 40px;
-  height: 40px;
+  width: 750px;
+  height: 1rem;
   color: $maimClore;
 }
 </style>
