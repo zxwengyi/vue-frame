@@ -16,14 +16,14 @@ export default {
   },
   computed: {
     ...mapGetters({
-      number: 'number'
+      number: "number"
     })
   },
   methods: {
     ...mapActions('app', {
       add: 'Add'
     }),
-    addEnd() {
+    addEnd () {
       this.add({ number: 1 });
     }
   }
