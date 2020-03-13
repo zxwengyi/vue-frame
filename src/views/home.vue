@@ -52,9 +52,8 @@ export default {
     },
     // 使用动态组件
     showNotice() {
-     const notice = this.$createNotice(Notice, {title: 'title', message: 'message', duration: 2000});
+     const notice = this.$createNotice(Notice, {title: '标题', message: '消息内容', duration: 2000});
      notice.show()
-
     }
   }
 };

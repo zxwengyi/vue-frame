@@ -39,4 +39,18 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+ .box{
+   position: fixed;
+   width: 80%;
+   height: 200px;
+   left: 50%;
+   top: 50%;
+   transform: translate(-50%, -50%);
+   display: flex;
+   background: #cccccc;
+   flex-direction: column;
+   justify-content: space-around;
+   text-align: center;
+ }
+</style>
