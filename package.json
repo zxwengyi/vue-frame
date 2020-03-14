@@ -8,7 +8,7 @@
     "build:test": "vue-cli-service build --mode test",
     "build": "vue-cli-service build --mode prod",
     "lint": "vue-cli-service lint",
-    "analyzer": "use_analyzer=true yarn serve"
+    "analyzer": "use_analyzer=true yarn build"
   },
   "dependencies": {
     "axios": "^0.19.2",
