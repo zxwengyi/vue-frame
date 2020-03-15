@@ -3,8 +3,8 @@ import Vue from "vue";
 import createNotice from "../utils/createCompont";
 Vue.prototype.$createNotice = createNotice;
 // 自定义指令
-Vue.directive("loading", function update(el, binding, vnode) {
-    console.log(el, binding, vnode);
+Vue.directive("loading", function update(el, binding) {
+    // console.log(el, binding, vnode);
     if (binding.value) {
       const html = document.createElement("div");
       html.innerText = "loading...";

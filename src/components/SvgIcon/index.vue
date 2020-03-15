@@ -20,7 +20,7 @@ export default {
   },
   computed: {
     svgName() {
-      console.log('this.iconName' + this.iconName)
+      // console.log('this.iconName' + this.iconName)
       return `#icon-${this.iconName}`
     },
     svgClass() {
