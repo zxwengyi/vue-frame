@@ -26,6 +26,12 @@ const router = new Router({
       }
     },
     {
+      path: "/scroll",
+      name: "scroll",
+      component: () =>
+        import(/* webpackChunkName: "about" */ "@/views/recycleScroller.vue")
+    },
+    {
       path: "/lazy",
       name: "lazy",
       component: () =>

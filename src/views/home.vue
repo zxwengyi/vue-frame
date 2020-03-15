@@ -13,8 +13,8 @@
       <van-button type="primary" v-loading="isloading" @click="update">loading directtive</van-button>
       <!-- 以函数形式创建全局弹窗组件，减少侵入式引用 -->
       <van-button type="info" @click="showNotice">notice</van-button>
-      <van-button type="danger">危险按钮</van-button>
-
+      <!-- 虚拟长列表，保证无限列表不会导致内存泄露 -->
+      <van-button type="danger" @click="toPath('scroll')">虚拟列表</van-button>
       <!-- 使用图片懒加载组件 -->
       <van-button type="warning" @click="toPath('lazy')">图片懒加载</van-button>
       <!-- 展示形的组件使用函数式组件 -->
@@ -36,7 +36,11 @@ export default {
     return {
       name: "Home",
       isloading: false,
-      message: "简单显示内容，使用函数式组件，提高渲染效率"
+      message: "简单显示内容，使用函数式组件，提高渲染效率",
+      list: [{
+        name: '1',
+        id: 1
+      }]
     };
   },
   computed: {

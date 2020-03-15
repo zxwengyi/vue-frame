@@ -2,10 +2,10 @@ import Vue from 'vue'
 import 'lib-flexible'
 import { Button } from 'vant';
 import VueLazyload from 'vue-lazyload'
-
-
-Vue.use(Button);
  
+// 按需引入UI组件
+Vue.use(Button);
+// 使用图片懒加载插件
 Vue.use(VueLazyload, {
   preLoad: 1.3,
   error: require('@/assets/images/01.png'),   //请求失败后显示的图片
