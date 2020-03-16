@@ -6,7 +6,7 @@ const path = require("path");
 function resolve(dir) {
   return path.join(__dirname, dir);
 }
-const IS_DEV = process.env.NODE_ENV === "development" ? true : false;
+const IS_DEV = process.env.VUE_APP_CURRENTMODE === "dev" ? true : false;
 
 const port = 8000;
 const title = "frame";
