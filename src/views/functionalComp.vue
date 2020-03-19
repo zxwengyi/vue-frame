@@ -14,7 +14,5 @@ export default {
 </script>
 
 <style>
- .functional{
-     /* font-size: 40px; */
- }
+
 </style>

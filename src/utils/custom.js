@@ -2,7 +2,7 @@ import Vue from "vue";
 // 引入自定义组件js
 import createNotice from "../utils/createCompont";
 Vue.prototype.$createNotice = createNotice;
-// 4.自定义指令
+// 6.自定义指令
 Vue.directive("loading", function update(el, binding) {
     // console.log(el, binding, vnode);
     if (binding.value) {

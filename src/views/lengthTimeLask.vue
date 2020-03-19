@@ -21,14 +21,7 @@ export default {
   },
   methods: {
     heavy() {
-        // 1.合理利用局部变量
-      const baseVariable = this.base;
-      let reslut = this.reslut;
-      for (let i = 0; i < 100000; i++) {
-        // reslut += this.base;
-        reslut += baseVariable;
-      }
-      this.reslut = reslut;
+      this.reslut = 100000;
         setTimeout(() => {
           this.message = "子组件的耗时任务";
           this.reslut = 10;

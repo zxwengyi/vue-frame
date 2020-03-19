@@ -8,10 +8,12 @@
     <section class="content">
       <ul>
         <li>
+          <!-- 1、合理利用局部变量 -->
           <p>1、合理利用局部变量</p>
           <div>for 循环的结果{{reslut}}</div>
         </li>
         <li>
+          <!-- 2、路由使用懒加载 -->
           <p>2、路由使用懒加载</p>
           <button @click="toPath('about')">to abaout</button>
           <button @click="toPath('login')">to login</button>
@@ -22,7 +24,7 @@
           <length-time-lask></length-time-lask>
         </li>
         <li>
-          <!-- 3.合理使用函数式组件 -->
+          <!-- 4.合理使用函数式组件 -->
           <p>4、合理使用函数式组件</p>
           <Functional :message="message"></Functional>
         </li>
@@ -100,6 +102,16 @@ export default {
     ...mapActions("app", {
       add: "Add"
     }),
+    heavy() {
+        // 1.合理利用局部变量保存数据
+      const baseVariable = this.base;
+      let reslut = this.reslut;
+      for (let i = 0; i < 100000; i++) {
+        // reslut += this.base;
+        reslut += baseVariable;
+      }
+      this.reslut = reslut;
+    },
     addEnd() {
       // let a = 1;
       this.add({ number: 1 });
@@ -114,7 +126,7 @@ export default {
         this.isloading = false;
       }, 2000);
     },
-    // 4.使用动态组件
+    // 5.使用动态组件
     showNotice() {
       const notice = this.$createNotice(Notice, {
         title: "标题",
@@ -122,16 +134,6 @@ export default {
         duration: 2000
       });
       notice.show();
-    },
-    heavy() {
-        // 1.合理利用局部变量
-      const baseVariable = this.base;
-      let reslut = this.reslut;
-      for (let i = 0; i < 100000; i++) {
-        // reslut += this.base;
-        reslut += baseVariable;
-      }
-      this.reslut = reslut;
     }
   }
 };

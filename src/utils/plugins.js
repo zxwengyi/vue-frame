@@ -1,10 +1,10 @@
 import Vue from 'vue'
 import 'lib-flexible'
 import { Button } from 'vant';
-import VueLazyload from 'vue-lazyload'
- 
 // 按需引入UI组件
 Vue.use(Button);
+
+import VueLazyload from 'vue-lazyload'
 // 使用图片懒加载插件
 Vue.use(VueLazyload, {
   preLoad: 1.3,
