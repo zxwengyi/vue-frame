@@ -1,26 +1,64 @@
 <template>
   <div>
-    <p>page{{ name }}</p>
-    <svg-icon icon-name="setting" class-name="set" />
-    <svg-icon icon-name="message" />
-    <p>{{ number }}</p>
-    <div @click="addEnd">add</div>
-    <button @click="toPath('about')">to abaout</button>
-    <button @click="toPath('login')">to login</button>
-    <section class="btn">
-      <van-button type="default">默认按钮</van-button>
-      <!-- 自定义指令，方便使用 -->
-      <van-button type="primary" v-loading="isloading" @click="update">loading directtive</van-button>
-      <!-- 以函数形式创建全局弹窗组件，减少侵入式引用 -->
-      <van-button type="info" @click="showNotice">notice</van-button>
-      <!-- 虚拟长列表，保证无限列表不会导致内存泄露 -->
-      <van-button type="danger" @click="toPath('scroll')">虚拟列表</van-button>
-      <!-- 使用图片懒加载组件 -->
-      <van-button type="warning" @click="toPath('lazy')">图片懒加载</van-button>
-      <!-- 展示形的组件使用函数式组件 -->
-      <Functional :message="message"></Functional>
-      <!-- 耗时任务放在子组件 -->
-      <length-time-lask></length-time-lask>
+    <!-- <p>{{ number }}</p> -->
+    <!-- <div @click="addEnd">add</div> -->
+    <header>
+      <p class="title">vue开发中常用到的优化方法</p>
+    </header>
+    <section class="content">
+      <ul>
+        <li>
+          <p>1、合理利用局部变量</p>
+          <div>for 循环的结果{{reslut}}</div>
+        </li>
+        <li>
+          <p>2、路由使用懒加载</p>
+          <button @click="toPath('about')">to abaout</button>
+          <button @click="toPath('login')">to login</button>
+        </li>
+        <li>
+          <!-- 3.耗时任务放在子组件 -->
+          <p>3、耗时任务放在子组件</p>
+          <length-time-lask></length-time-lask>
+        </li>
+        <li>
+          <!-- 3.合理使用函数式组件 -->
+          <p>4、合理使用函数式组件</p>
+          <Functional :message="message"></Functional>
+        </li>
+        <li>
+          <!-- 5.以函数形式创建全局弹窗组件，减少侵入式引用 -->
+          <p>5、用函数创建组件，减少侵入式引用</p>
+          <van-button type="info" @click="showNotice">notice</van-button>
+        </li>
+        <li>
+          <!-- 6.自定义指令，方便使用 -->
+          <p>6、自定义指令</p>
+          <van-button type="primary" v-loading="isloading" @click="update"
+            >loading directtive</van-button
+          >
+        </li>
+        <li>
+          <!-- 7.使用图片懒加载组件 -->
+          <p>7、多使用svg图片</p>
+          <svg-icon icon-name="setting" class-name="set" />
+          <svg-icon icon-name="message" />
+        </li>
+        <li>
+          <!-- 8.使用图片懒加载组件 -->
+          <p>8、图片懒加载</p>
+          <van-button type="warning" @click="toPath('lazy')"
+            >图片懒加载</van-button
+          >
+        </li>
+        <li>
+          <!-- 9.虚拟长列表，保证无限列表不会导致内存泄露 -->
+          <p>9、使用虚拟长列表</p>
+          <van-button type="danger" @click="toPath('scroll')"
+            >虚拟列表</van-button
+          >
+        </li>
+      </ul>
     </section>
   </div>
 </template>
@@ -31,22 +69,32 @@ import Functional from "./functionalComp";
 import LengthTimeLask from "./lengthTimeLask";
 export default {
   name: "Home",
-  components: { Functional,LengthTimeLask},
+  components: { Functional, LengthTimeLask },
   data() {
     return {
       name: "Home",
       isloading: false,
+      reslut: 0,
       message: "简单显示内容，使用函数式组件，提高渲染效率",
-      list: [{
-        name: '1',
-        id: 1
-      }]
+      list: [
+        {
+          name: "1",
+          id: 1
+        }
+      ]
     };
+  },
+  created() {
+    this.heavy();
   },
   computed: {
     ...mapGetters({
       number: "number"
-    })
+    }),
+    base() {
+      const length = 'wewrerewtret'.length
+      return length;
+    }
   },
   methods: {
     ...mapActions("app", {
@@ -66,7 +114,7 @@ export default {
         this.isloading = false;
       }, 2000);
     },
-    // 使用动态组件
+    // 4.使用动态组件
     showNotice() {
       const notice = this.$createNotice(Notice, {
         title: "标题",
@@ -74,12 +122,38 @@ export default {
         duration: 2000
       });
       notice.show();
+    },
+    heavy() {
+        // 1.合理利用局部变量
+      const baseVariable = this.base;
+      let reslut = this.reslut;
+      for (let i = 0; i < 100000; i++) {
+        // reslut += this.base;
+        reslut += baseVariable;
+      }
+      this.reslut = reslut;
     }
   }
 };
 </script>
 <style scoped lang="scss">
-$maimClore: rgb(49, 148, 110);
+$maimClore: #07c160;
+$assistClore:#1989fa;
+.title{
+  font-size: 30px;
+  color: $maimClore;
+}
+.content{
+  color: #000;
+  font-size: 20px;
+  li{
+    padding: 10px;
+    border-bottom: solid 1px #cccccc;
+    p{
+      color: $assistClore;
+    }
+  }
+}
 .svg-icon.set {
   width: 750px;
   height: 1rem;

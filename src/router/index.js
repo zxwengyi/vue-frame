@@ -1,15 +1,14 @@
 import Vue from "vue";
 import Router from "vue-router";
 Vue.use(Router);
-
 const router = new Router({
   mode: "history",
   routes: [
     {
       path: "/",
-      name: "home",
-      component: () =>
-        import(/* webpackChunkName: "about" */ "@/views/home.vue"),
+      name: "home",  
+      component: () => 
+        import(/* webpackChunkName: "home" */ "@/views/home.vue"), //2.懒加载方式引入路由
       meta: {
         auth: false, // 是否需要登录
         keepAlive: true // 是否缓存组件
@@ -29,13 +28,13 @@ const router = new Router({
       path: "/scroll",
       name: "scroll",
       component: () =>
-        import(/* webpackChunkName: "about" */ "@/views/recycleScroller.vue")
+        import(/* webpackChunkName: "scroll" */ "@/views/recycleScroller.vue")
     },
     {
       path: "/lazy",
       name: "lazy",
       component: () =>
-        import(/* webpackChunkName: "about" */ "@/views/lazyLoadImages.vue")
+        import(/* webpackChunkName: "lazy" */ "@/views/lazyLoadImages.vue")
     },
     {
       path: "/login",

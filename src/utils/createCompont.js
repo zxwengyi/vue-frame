@@ -1,5 +1,4 @@
 import Vue from "vue";
-
 export default function createNotice(Compontent, props) {
   // 先实例化vm
   const vm = new Vue({
@@ -15,6 +14,5 @@ export default function createNotice(Compontent, props) {
     document.body.removeChild(vm.$el);
     vm.$destroy();
   };
-
   return comp
 }

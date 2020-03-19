@@ -15,6 +15,6 @@ export default {
 
 <style>
  .functional{
-     font-size: 40px;
+     /* font-size: 40px; */
  }
 </style>

@@ -15,16 +15,18 @@ export default {
   },
   computed: {
     base() {
-      return 10;
+      const length = 'wewrerewtret'.length
+      return length;
     }
   },
   methods: {
     heavy() {
-        // 合理利用局部变量
-      const base = this.base;
+        // 1.合理利用局部变量
+      const baseVariable = this.base;
       let reslut = this.reslut;
       for (let i = 0; i < 100000; i++) {
-        reslut += base;
+        // reslut += this.base;
+        reslut += baseVariable;
       }
       this.reslut = reslut;
         setTimeout(() => {
