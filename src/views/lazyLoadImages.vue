@@ -33,4 +33,13 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped lang="scss">
+.lazy-load-image #container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  img{
+    width: 10rem;
+  }
+}
+</style>>
