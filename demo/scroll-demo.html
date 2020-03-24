@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="jquery-1.10.2.min.js"></script>
+    <style>
+        .infinity-scroll{
+            width: 300px;
+            height: 500px;
+            position: absolute;
+            left:10px;
+            top:10px;
+            background-color: #ffffff;
+            box-sizing: border-box;
+            border:1px solid green;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+        .main-content{
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            width: 100%;
+            box-sizing: border-box;
+            background-color: #cccccc;
+            border: 1px solid #ffffff;
+        }
+
+        .item{
+            width: 100%;
+            height: 50px;
+            background-color: #ffffff;
+        }
+
+        .item:nth-child(2n+1){
+            background-color: green;
+        }
+
+        .scroll-wrapper{
+            width: 100%;
+            background-color: red;
+            height: 2000px;
+        }
+
+        .hide{
+            display: none;
+        }
+
+    </style>
+    <script>
+        $(function(){
+            var infinity_scroll_height;
+            var infinity_scroll_top;
+            var isLoading=false;
+
+            var lastMaxItemIndex=parseInt($(".item.last-item").last().attr("data-items-index"),10);
+
+            function appendNewItems(prev_main_content_height,scroll_top){
+                // console.log("============底部添加");
+                requestAnimationFrame(function(){
+                    var documentFragment=document.createDocumentFragment();
+                    var i,item;
+                    var lastIndex=parseInt($(".item.last-item").attr("data-items-index"),10);
+                    $(".item.last-item").removeClass("last-item");
+                    for(i=0;i<10;i++){
+                        lastIndex++;
+                        item=$('<div class="item" data-items-index="0">2</div>');
+                        $(item).attr("data-items-index",(lastIndex));
+                        $(item).html(lastIndex+1);
+                        if(i===9){
+                            $(item).addClass("last-item");
+                        }
+                        documentFragment.appendChild($(item)[0]);
+                    }
+
+                    //更新此字段，作为是否 需要更新main-content的 height 的标志
+                    //lastMaxItemIndex=Math.max(lastMaxItemIndex,lastIndex);
+
+                    //同时removefirst-item后面的10个元素
+
+                    $(".item").slice(0,10).remove();
+                    $(".item").first().addClass("first-item");
+                    var mainContentPaddingTop=$(".main-content").css("padding-top");
+                    mainContentPaddingTop=parseFloat(mainContentPaddingTop.split("px")[0]||0);
+
+                    $(".main-content").append(documentFragment);
+
+                    if(lastMaxItemIndex<lastIndex){
+                        $(".main-content").css({
+                            "height":prev_main_content_height+10*50,
+                            "padding-top":mainContentPaddingTop+10*50
+                        });
+                        lastMaxItemIndex=lastIndex;
+                    }else{
+                        $(".main-content").css({
+                            "padding-top":mainContentPaddingTop+10*50
+                        });
+                    }
+
+
+                    $('.infinity-scroll').off("scroll",infinity_scrollFun);
+                    // $('.infinity-scroll').scrollTop(scroll_top);
+                    $('.infinity-scroll').on("scroll",infinity_scrollFun);
+                    isLoading=false;
+
+                });
+
+            }
+
+            function restorePreItems(prev_main_content_height,scroll_top){
+                requestAnimationFrame(function(){
+                    console.log("============顶部添加");
+                    //头部添加新的10个元素
+                    var documentFragment=document.createDocumentFragment();
+                    var i,item,mainContentPaddingTop;
+                    var lastIndex=parseInt($(".item.first-item").attr("data-items-index"),10);
+
+                    console.log(".item.first-item lastIndex%s",lastIndex);
+                    if(lastIndex<=0){
+                        isLoading=false;
+                        return ;
+                    }
+                    $(".item.first-item").removeClass("first-item");
+                    for(i=0;i<10;i++){
+//                        lastIndex--;
+                        item=$('<div class="item" data-items-index="0"></div>');
+                        $(item).attr("data-items-index",(lastIndex-10+i));
+                        $(item).html(lastIndex-10+i+1);
+                        if(i===0){
+                            $(item).addClass("first-item");
+                        }
+                        documentFragment.appendChild($(item)[0]);
+                    }
+                    //删除尾部的10个元素
+                    $(".item.last-item").prevAll().slice(0,9).remove();
+                    $(".item.last-item").remove();
+
+                    $(".item").last().addClass("last-item");
+                    mainContentPaddingTop=$(".main-content").css("padding-top");
+                    mainContentPaddingTop=parseFloat(mainContentPaddingTop.split("px")[0]||0);
+
+                    $(".main-content").css({
+                        "padding-top":mainContentPaddingTop-10*50
+                    });
+                    $(".main-content").prepend(documentFragment);
+
+                    $('.infinity-scroll').off("scroll",infinity_scrollFun);
+                    // $('.infinity-scroll').scrollTop(scroll_top);
+                    $('.infinity-scroll').on("scroll",infinity_scrollFun);
+
+                    isLoading=false;
+                    
+                });
+            }
+
+            function infinity_scrollFun(){
+                var last_item_top,first_item_top;
+                if(!infinity_scroll_height){
+                    infinity_scroll_height=$(".infinity-scroll")[0].getBoundingClientRect().height;
+                    infinity_scroll_top=$(".infinity-scroll")[0].getBoundingClientRect().top;
+                }
+
+                if(isLoading){
+                    return;
+                }else{
+                    last_item_top=$(".item.last-item")[0].getBoundingClientRect().top;
+                    last_item_top=last_item_top-infinity_scroll_top;
+                }
+
+                // console.log("~~~last_item_top=%s, infinity_scroll_height%s~~~",last_item_top,infinity_scroll_height);
+                if(last_item_top<=infinity_scroll_height){
+                    isLoading=true;
+                    appendNewItems($(".main-content")[0].getBoundingClientRect().height,$(this).scrollTop());
+                    return;
+                }
+
+                first_item_top=$(".item.first-item")[0].getBoundingClientRect().top;
+                first_item_top=first_item_top-infinity_scroll_top;
+                // console.log("~~first_item_top~~~%s",first_item_top);
+                if(first_item_top>=0){
+                    restorePreItems($(".main-content")[0].getBoundingClientRect().height,$(this).scrollTop());
+                    return;
+                }
+                // console.log("~~~scrollTop~~~"+$(this).scrollTop());
+            }
+
+            $('.infinity-scroll').on("scroll",infinity_scrollFun);
+        });
+    </script>
+</head>
+<body>
+
+    <div class="infinity-scroll">
+        <div class="main-content">
+            <div class="item first-item" data-items-index="0">1</div>
+            <div class="item" data-items-index="1">2</div>
+            <div class="item" data-items-index="2">3</div>
+            <div class="item" data-items-index="3">4</div>
+            <div class="item" data-items-index="4">5</div>
+            <div class="item" data-items-index="5">6</div>
+            <div class="item" data-items-index="6">7</div>
+            <div class="item" data-items-index="7">8</div>
+            <div class="item" data-items-index="8">9</div>
+            <div class="item " data-items-index="9">10</div>
+
+            <div class="item " data-items-index="10">11</div>
+            <div class="item" data-items-index="11">12</div>
+            <div class="item" data-items-index="12">13</div>
+            <div class="item" data-items-index="13">14</div>
+            <div class="item" data-items-index="14">15</div>
+            <div class="item" data-items-index="15">16</div>
+            <div class="item" data-items-index="16">17</div>
+            <div class="item" data-items-index="17">18</div>
+            <div class="item" data-items-index="18">19</div>
+            <div class="item " data-items-index="19">20</div>
+
+            <div class="item " data-items-index="20">21</div>
+            <div class="item" data-items-index="21">22</div>
+            <div class="item" data-items-index="22">23</div>
+            <div class="item" data-items-index="23">24</div>
+            <div class="item" data-items-index="24">25</div>
+            <div class="item" data-items-index="25">26</div>
+            <div class="item" data-items-index="26">27</div>
+            <div class="item" data-items-index="27">28</div>
+            <div class="item" data-items-index="28">29</div>
+            <div class="item last-item" data-items-index="29">30</div>
+
+        </div>
+    </div>
+</body>
+</html>
