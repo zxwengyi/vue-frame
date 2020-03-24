@@ -39,7 +39,7 @@ module.exports = {
       })
       // 使用cdn加载插件
       config.set("externals", {
-        vue: "Vue",
+        vue: "vue",
         axios: "axios",
         "vue-router": "VueRouter"
       }),
