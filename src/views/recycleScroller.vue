@@ -17,7 +17,9 @@
 import item from "./item";
 import virtualList from "vue-virtual-scroll-list";
 const itemList = [];
-for (let idx = 0; idx < 200; idx++) {
+console.log("=======");
+
+for (let idx = 0; idx < 20000; idx++) {
   itemList.push({
     index: idx
   });

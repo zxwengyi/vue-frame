@@ -12,6 +12,7 @@ const port = 8000;
 const title = "frame";
 
 module.exports = {
+  publicPath: '/public',
   devServer: {
     port: port,
     open: true,
