@@ -60,64 +60,64 @@ module.exports = {
       config.optimization.minimize(true);
       // 分割代码
       config.optimization.splitChunks({
-        cacheGroups: {
-          commons: {
-            test: /[\\/]node_modules[\\/]/,
-            // cacheGroupKey here is `commons` as the key of the cacheGroup
-            name(module, chunks, cacheGroupKey) {
-              const moduleFileName = module
-                .identifier()
-                .split("/")
-                .reduceRight((item) => item);
-              const allChunksNames = chunks.map((item) => item.name).join("~");
-              return `${cacheGroupKey}-${allChunksNames}-${moduleFileName}`;
-            },
-            chunks: "all",
-          },
-        },
-        // chunks: "all",
         // cacheGroups: {
-        //   vue_chunk: {
-        //     name: "vue_chunk",
-        //     test: /[\\/]node_modules[\\/]vue[\\/]/,
-        //     chunks: "all",
-        //     priority: 50,
-        //     reuseExistingChunk: true,
-        //     enforce: true
-        //   },
-        //   vuex_chunk: {
-        //     name: "vuex_chunk",
-        //     test: /[\\/]node_modules[\\/]_?vuex[\\/]/,
-        //     chunks: "all",
-        //     priority: 40,
-        //     reuseExistingChunk: true,
-        //     enforce: true
-        //   },
-        //   axios_chunk: {
-        //     name: "axios_chunk",
-        //     test: /[\\/]node_modules[\\/]_?axios[\\/]/,
-        //     chunks: "all",
-        //     priority: 30,
-        //     reuseExistingChunk: true,
-        //     enforce: true
-        //   },
-        //   vue_router_chunk: {
-        //     name: "vue_router_chunk",
-        //     test: /[\\/]node_modules[\\/]_?vue-router[\\/]/,
-        //     chunks: "all",
-        //     priority: 20,
-        //     reuseExistingChunk: true,
-        //     enforce: true
-        //   },
         //   commons: {
-        //     name: "chunk-commons",
         //     test: /[\\/]node_modules[\\/]/,
+        //     // cacheGroupKey here is `commons` as the key of the cacheGroup
+        //     name(module, chunks, cacheGroupKey) {
+        //       const moduleFileName = module
+        //         .identifier()
+        //         .split("/")
+        //         .reduceRight((item) => item);
+        //       const allChunksNames = chunks.map((item) => item.name).join("~");
+        //       return `${cacheGroupKey}-${allChunksNames}-${moduleFileName}`;
+        //     },
         //     chunks: "all",
-        //     priority: 10,
-        //     reuseExistingChunk: true,
-        //     enforce: true
-        //   }
-        // }
+        //   },
+        // },
+        chunks: "all",
+        cacheGroups: {
+          vue_chunk: {
+            name: "vue_chunk",
+            test: /[\\/]node_modules[\\/]vue[\\/]/,
+            chunks: "all",
+            priority: 50,
+            reuseExistingChunk: true,
+            enforce: true
+          },
+          vuex_chunk: {
+            name: "vuex_chunk",
+            test: /[\\/]node_modules[\\/]_?vuex[\\/]/,
+            chunks: "all",
+            priority: 40,
+            reuseExistingChunk: true,
+            enforce: true
+          },
+          axios_chunk: {
+            name: "axios_chunk",
+            test: /[\\/]node_modules[\\/]_?axios[\\/]/,
+            chunks: "all",
+            priority: 30,
+            reuseExistingChunk: true,
+            enforce: true
+          },
+          vue_router_chunk: {
+            name: "vue_router_chunk",
+            test: /[\\/]node_modules[\\/]_?vue-router[\\/]/,
+            chunks: "all",
+            priority: 20,
+            reuseExistingChunk: true,
+            enforce: true
+          },
+          commons: {
+            name: "chunk-commons",
+            test: /[\\/]node_modules[\\/]/,
+            chunks: "all",
+            priority: 10,
+            reuseExistingChunk: true,
+            enforce: true
+          }
+        }
       });
       if (process.env.use_analyzer) {
         // 分析
