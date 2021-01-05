@@ -11,7 +11,7 @@
     "analyzer": "use_analyzer=true yarn build"
   },
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "babel-plugin-transform-remove-console": "^6.9.4",
     "core-js": "^3.6.4",
     "lib-flexible": "^0.3.2",
